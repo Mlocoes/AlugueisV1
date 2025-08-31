@@ -14,6 +14,7 @@ class UIManager {
     constructor() {
         this.currentTab = window.AppConfig?.ui?.defaultTab || 'dashboard';
         this.alertContainer = null;
+        this.lastFocusedElement = null; // Para manejar el foco del modal
         this.init();
     }
 
@@ -52,6 +53,20 @@ class UIManager {
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 this.closeActiveModal();
+            }
+        });
+
+        // Manejo de foco para todos los modales de Bootstrap
+        document.addEventListener('show.bs.modal', (event) => {
+            if (event.relatedTarget) {
+                this.lastFocusedElement = event.relatedTarget;
+            }
+        });
+
+        document.addEventListener('hidden.bs.modal', () => {
+            if (this.lastFocusedElement) {
+                this.lastFocusedElement.focus();
+                this.lastFocusedElement = null;
             }
         });
     }
