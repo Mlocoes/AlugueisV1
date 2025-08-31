@@ -63,7 +63,7 @@ class UIManager {
             }
         });
 
-        document.addEventListener('hidden.bs.modal', () => {
+        document.addEventListener('hide.bs.modal', () => {
             if (this.lastFocusedElement) {
                 this.lastFocusedElement.focus();
                 this.lastFocusedElement = null;
